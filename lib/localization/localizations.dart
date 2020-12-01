@@ -1,0 +1,80 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show SynchronousFuture;
+import 'package:flutter/material.dart';
+
+class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+  final Locale overriddenLocale;
+
+  const AppLocalizationsDelegate(this.overriddenLocale);
+
+  @override
+  bool isSupported(Locale locale) =>
+      ['en', 'hi', 'ar'].contains(locale.languageCode);
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(AppLocalizations(locale));
+  }
+
+  @override
+  bool shouldReload(AppLocalizationsDelegate old) => false;
+}
+
+class AppLocalizations {
+  AppLocalizations(this.locale);
+
+  Locale locale;
+
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  }
+
+  static Map<String, Map<String, String>> _localizedValues = {
+    'en': {
+      'appName': 'Localization Demo',
+      'appNameShort': 'Localization',
+      'title': 'FlutterDevs',
+      'desc': 'FlutterDevs intent to deliver Flutter apps with '
+          'high quality. We’ve adopted Design First attitude '
+          'which helps us deliver applications of highest quality.',
+    },
+    'hi': {
+      'appName': 'लोकलाइजेशन डेमो',
+      'appNameShort': 'लोकलाइजेशन',
+      'title': 'फ्लूटेरडेव्स',
+      'desc': 'FlutterDevs उच्च गुणवत्ता वाले Flutter ऐप्स वितरित करने '
+          'का इरादा रखता है। हमने डिजाइन फर्स्ट रवैया अपनाया है जो हमें '
+          'उच्चतम गुणवत्ता के अनुप्रयोगों को वितरित करने में मदद करता है।',
+    },
+    'ar': {
+      'appName': 'تطبيق تجريبي ',
+      'appNameShort': 'ترجمه',
+      'title': 'للللللللل',
+      'desc': 'تجريبي تجريبي تجريبي تجريبي  '
+          'تجريبي تجريبي تجريبي تجريبي '
+          'تجريبي تجريبي تجريبي تجريبي',
+    },
+  };
+
+  load(Locale locale) {
+    this.locale = locale;
+  }
+
+  String get appName {
+    return _localizedValues[locale.languageCode]['appName'];
+  }
+
+  String get appNameShort {
+    return _localizedValues[locale.languageCode]['appNameShort'];
+  }
+
+  String get title {
+    return _localizedValues[locale.languageCode]['title'];
+  }
+
+  String get desc {
+    return _localizedValues[locale.languageCode]['desc'];
+  }
+}
